@@ -20,11 +20,11 @@ const router = createRouter({
       name: 'user-detail',
       component: () => import('@/views/UserDetailView.vue'),
     },
-    // {
-    //   path: '/event-calendar',
-    //   name: 'event-calendar',
-    //   component: () => import('@/views/EventCalendarView.vue'),
-    // },
+    {
+      path: '/event-calendar',
+      name: 'event-calendar',
+      component: () => import('@/views/EventCalendarView.vue'),
+    },
   ],
 })
 
