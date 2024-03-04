@@ -1,5 +1,4 @@
 <script setup>
-import MainLayout from '@/layouts/MainLayout.vue'
 /*
 Reto 1: Validación de formularios
 
@@ -13,91 +12,109 @@ un nombre, un email y una contraseña (dos veces). Las validaciones serán las s
 
 Siéntete libre de modificar tanto código como sea necesario, recuerda que el código proporcionado es sólo un ejemplo.
 */
+import { ref, computed } from "vue";
+import InputField from "@/components/App/InputField.vue";
+import MainLayout from "@/layouts/MainLayout.vue";
+
+let username = ref("");
+let usernameBlurred = ref(false);
+
+let email = ref("");
+let emailBlurred = ref(false);
+
+let password = ref("");
+let passwordBlurred = ref(false);
+
+let confirmPassword = ref("");
+let confirmPasswordBlurred = ref(false);
+
+let submitClicked = ref(false);
+
+const usernameIsValid = computed(() => username.value.length <= 64);
+
+const emailIsValid = computed(() =>
+  /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(email.value)
+);
+
+const passwordIsValid = computed(() =>
+  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(
+    password.value
+  )
+);
+
+const confirmPasswordIsValid = computed(
+  () => password.value === confirmPassword.value && password.value.length > 0
+);
+
+const formIsValid = computed(
+  () =>
+    usernameIsValid.value &&
+    emailIsValid.value &&
+    passwordIsValid.value &&
+    confirmPasswordIsValid.value
+);
 
 const submit = () => {
-  /*
-  No es necesario integrar ningún cliente http. Simplemente valida que los datos son válidos
-  antes de pintar el payload por consola mediante console.log(), Por ejemplo:
-
-  if (formIsValid) {
-    console.log(payload)
+  if (formIsValid.value) {
+    const payload = {
+      username: username.value,
+      email: email.value,
+      password: password.value,
+    };
+    console.log(payload);
   }
-  */
-}
+};
 </script>
 
 <template>
   <MainLayout>
-    <form
-      class="bg-white p-10 rounded-lg shadow-lg min-w-full"
-      @submit.prevent="submit"
-    >
-      <div>
-        <div
-          class="font-semibold block my-3 text-md"
-          for="username"
-        >
-          Username
-        </div>
-        <input
-          id="username"
-          class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none"
-          type="text"
-          name="username"
-          placeholder="username"
-        >
-      </div>
-      <div>
-        <div
-          class="font-semibold block my-3 text-md"
-          for="email"
-        >
-          Email
-        </div>
-        <input
-          id="email"
-          class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none"
-          type="text"
-          name="email"
-          placeholder="@email"
-        >
-      </div>
-      <div>
-        <div
-          class="font-semibold block my-3 text-md"
-          for="password"
-        >
-          Password
-        </div>
-        <input
-          id="password"
-          class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none"
-          type="text"
-          name="password"
-          placeholder="password"
-        >
-      </div>
-      <div>
-        <div
-          class="font-semibold block my-3 text-md"
-          for="confirm"
-        >
-          Confirm password
-        </div>
-        <input
-          id="confirm"
-          class="w-full bg-gray-100 px-4 py-2 rounded-lg focus:outline-none"
-          type="text"
-          name="confirm"
-          placeholder="confirm password"
-        >
-      </div>
-      <button
-        type="submit"
-        class="bg-primary w-full mt-6 rounded-lg px-4 py-2 text-lg text-white font-semibold font-sans"
+    <div class="flex items-center justify-center min-h-screen">
+      <form
+        class="bg-white p-10 rounded-lg shadow-lg w-full sm:w-1/4"
+        @submit.prevent="submit"
       >
-        Register
-      </button>
-    </form>
+        <InputField
+          v-model="username"
+          label="Username"
+          type="text"
+          :validator="usernameIsValid"
+          errorMessage="El nombre de usuario debe tener un máximo de 64 caracteres."
+        />
+        <InputField
+          v-model="email"
+          label="Email"
+          type="email"
+          :validator="emailIsValid"
+          errorMessage="Por favor, introduce un email válido."
+        />
+        <InputField
+          v-model="password"
+          label="Password"
+          type="password"
+          :validator="passwordIsValid"
+          errorMessage="La contraseña debe tener al menos 8 caracteres, incluyendo al menos un número y un carácter especial."
+        />
+        <InputField
+          v-model="confirmPassword"
+          label="Confirm Password"
+          type="password"
+          :validator="confirmPasswordIsValid"
+          errorMessage="Las contraseñas no coinciden."
+        />
+        <button
+          type="submit"
+          class="bg-primary w-full mt-6 rounded-lg px-4 py-2 text-lg text-white font-semibold font-sans"
+          @click="submitClicked = true"
+        >
+          Register
+        </button>
+        <p v-if="submitClicked && !formIsValid" class="text-red-500">
+          Por favor, corrige los errores antes de registrarte.
+        </p>
+        <p v-else-if="submitClicked && formIsValid" class="text-green-500">
+          Tus datos han sido confirmados.
+        </p>
+      </form>
+    </div>
   </MainLayout>
 </template>
