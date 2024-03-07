@@ -2,7 +2,9 @@
 import { ref } from "vue";
 import MainLayout from "@/layouts/MainLayout.vue";
 import InfoBlock from "@/components/App/InfoBlock.vue";
-import InfoBlockImage from "@/components/App/InfoBlockImage.vue";
+import { PersonalInfo } from "@/models/PersonalInfo";
+import { AccountInfo } from "@/models/AccountInfo";
+import { AddressInfo } from "@/models/AddressInfo";
 
 /*
 Reto 2: Vista de Datos del Usuario.
@@ -75,51 +77,20 @@ const userData = {
   ein: "20-9487066",
   ssn: "661-64-2976",
 };
+
+const personalInfo = new PersonalInfo(userData);
+const accountInfo = new AccountInfo(userData);
+const addressInfo = new AddressInfo(userData);
+console.log(addressInfo);
 </script>
 
 <template>
   <MainLayout>
-    <InfoBlockImage
-      :info="userData"
-      title="Account"
-      :imageData="{ type: 'image', url: userData.image }"
-      :fields="[
-        { keyPath: userData.username, label: 'Username', type: 'text'},
-        { keyPath: userData.email, label: 'Email', type: 'text' },
-        {
-          keyPath: userData.password,
-          label: 'Password',
-          type: 'text',
-          isBlocked: true
-        },
-      ]"
-    />
+    <InfoBlock title="Account" :fields="accountInfo" />
+    <InfoBlock title="Personal" :fields="personalInfo" />
+    <InfoBlock title="Address" :fields="addressInfo" />
 
-    <InfoBlock
-      :info="userData"
-      title="Personal"
-      :fields="[
-        { keyPath: userData.firstName, label: 'First Name', type: 'text' },
-        { keyPath: userData.maidenName, label: 'Maiden Name', type: 'text' },
-        { keyPath: userData.lastName, label: 'Last Name', type: 'text' },
-        { keyPath: userData.phone, label: 'Phone', type: 'text' },
-        {
-          keyPath: userData.age,
-          label: 'Age',
-          type: 'number',
-          isEditable: false,
-        },
-        { keyPath: userData.birthDate, label: 'Birth Date', type: 'date' },
-        { keyPath: userData.university, label: 'University', type: 'text' },
-        {
-          keyPath: userData.ssn,
-          label: 'SSN',
-          type: 'text',
-          isSensitive: true,
-        },
-      ]"
-    />
-
+    <!-- 
     <InfoBlock
       :info="userData"
       title="Health & Physics"
@@ -133,11 +104,14 @@ const userData = {
         { keyPath: userData.university, label: 'University', type: 'text' },
       ]"
     />
-
     <InfoBlockImage
       :info="userData"
       title="Address"
-      :imageData="{ type: 'map', latitude: userData.address.coordinates.lat, longitude: userData.address.coordinates.lng }"
+      :imageData="{
+        type: 'map',
+        latitude: userData.address.coordinates.lat,
+        longitude: userData.address.coordinates.lng,
+      }"
       :fields="[
         { keyPath: userData.address.address, label: 'Address', type: 'text' },
         { keyPath: userData.address.city, label: 'City', type: 'text' },
@@ -211,11 +185,26 @@ const userData = {
       :info="userData"
       title="Session Data"
       :fields="[
-        { keyPath: userData.domain, label: 'Domain', type: 'text', isBlocked: true},
-        { keyPath: userData.ip, label: 'IP', type: 'text', isBlocked: true},
-        { keyPath: userData.macAddress, label: 'MAC Address', type: 'text', isBlocked: true },
-        { keyPath: userData.phone, label: 'Phone', type: 'text', isBlocked: true},
+        {
+          keyPath: userData.domain,
+          label: 'Domain',
+          type: 'text',
+          isBlocked: true,
+        },
+        { keyPath: userData.ip, label: 'IP', type: 'text', isBlocked: true },
+        {
+          keyPath: userData.macAddress,
+          label: 'MAC Address',
+          type: 'text',
+          isBlocked: true,
+        },
+        {
+          keyPath: userData.phone,
+          label: 'Phone',
+          type: 'text',
+          isBlocked: true,
+        },
       ]"
-    />
+    /> -->
   </MainLayout>
 </template>
