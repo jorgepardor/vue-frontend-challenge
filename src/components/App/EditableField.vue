@@ -21,10 +21,14 @@ const props = defineProps({
   isSensitive: {
     type: Boolean,
     default: false,
-  }
+  },
+  isBlocked: {
+    type: Boolean,
+    default: false,
+  },
 });
 
-let { modelValue, editable, isSensitive } = toRefs(props);
+let { modelValue, editable, isSensitive, isBlocked } = toRefs(props);
 
 let innerValue = ref(modelValue.value);
 
@@ -59,17 +63,17 @@ let displayValue = computed(() => {
   <div class="flex items-center justify-between mb-4">
     <label :for="label" class="w-40 text-gray-400 text-sm">{{ label }}</label>
     <input
-      v-if="editable"
+      v-if="editable && !isBlocked"
       :id="label"
       :type="type"
       v-model="innerValue"
       :class="{
-        'text-indigo-500 border-b border-gray-200 bg-gray-100 text-sm': editable,
-        ' text-gray-500 border-b border-transparent text-sm': !editable,
+        'text-indigo-500 border-b border-gray-200 text-sm text-right': editable,
+        ' text-gray-500 border-b border-white text-sm': !editable,
       }"  
     />
     <span v-else class="text-gray-600 text-sm ml-2 bg-transparent outline-none flex-1 text-right">
-      {{ isSensitive ? hideSensitiveNumbers(innerValue) : innerValue }}
+      {{ isSensitive && !isBlocked ? hideSensitiveNumbers(innerValue) : ( isBlocked ? '********' : innerValue) }}
     </span>
   </div>
 </template>

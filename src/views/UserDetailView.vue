@@ -81,23 +81,23 @@ const userData = {
   <MainLayout>
     <InfoBlockImage
       :info="userData"
-      title="Basic Information"
+      title="Account"
       :imageData="{ type: 'image', url: userData.image }"
       :fields="[
-        { keyPath: userData.username, label: 'Username', type: 'text' },
+        { keyPath: userData.username, label: 'Username', type: 'text'},
         { keyPath: userData.email, label: 'Email', type: 'text' },
         {
           keyPath: userData.password,
           label: 'Password',
           type: 'text',
-          isSensitive: true,
+          isBlocked: true
         },
       ]"
     />
 
     <InfoBlock
       :info="userData"
-      title="Personal Information"
+      title="Personal"
       :fields="[
         { keyPath: userData.firstName, label: 'First Name', type: 'text' },
         { keyPath: userData.maidenName, label: 'Maiden Name', type: 'text' },
@@ -122,7 +122,7 @@ const userData = {
 
     <InfoBlock
       :info="userData"
-      title="Health Information"
+      title="Health & Physics"
       :fields="[
         { keyPath: userData.height, label: 'Height', type: 'number' },
         { keyPath: userData.weight, label: 'Weight', type: 'number' },
@@ -137,7 +137,7 @@ const userData = {
     <InfoBlockImage
       :info="userData"
       title="Address"
-      :imageData="{ type: 'image', url: userData.image }"
+      :imageData="{ type: 'map', latitude: userData.address.coordinates.lat, longitude: userData.address.coordinates.lng }"
       :fields="[
         { keyPath: userData.address.address, label: 'Address', type: 'text' },
         { keyPath: userData.address.city, label: 'City', type: 'text' },
@@ -204,6 +204,17 @@ const userData = {
           type: 'text',
           isSensitive: true,
         },
+      ]"
+    />
+
+    <InfoBlock
+      :info="userData"
+      title="Session Data"
+      :fields="[
+        { keyPath: userData.domain, label: 'Domain', type: 'text', isBlocked: true},
+        { keyPath: userData.ip, label: 'IP', type: 'text', isBlocked: true},
+        { keyPath: userData.macAddress, label: 'MAC Address', type: 'text', isBlocked: true },
+        { keyPath: userData.phone, label: 'Phone', type: 'text', isBlocked: true},
       ]"
     />
   </MainLayout>
