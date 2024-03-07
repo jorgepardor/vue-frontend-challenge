@@ -1,0 +1,81 @@
+<script setup>
+import { ref, watch, toRefs, computed } from "vue";
+
+const props = defineProps({
+  modelValue: {
+    type: [String, Number],
+    default: "",
+  },
+  label: {
+    type: String,
+    default: "",
+  },
+  type: {
+    type: String,
+    default: "text",
+  },
+  editable: {
+    type: Boolean,
+    default: false,
+  },
+  isSensitive: {
+    type: Boolean,
+    default: false,
+  }
+});
+
+let { modelValue, editable, isSensitive } = toRefs(props);
+
+let innerValue = ref(modelValue.value);
+
+watch(modelValue, (newVal) => {
+  innerValue.value = newVal;
+});
+
+
+const emit = defineEmits(["update:modelValue"]);
+
+watch(innerValue, (newVal) => {
+  emit("update:modelValue", newVal);
+});
+
+function hideSensitiveNumbers(number) {
+  if (!number) return '';
+  const str = number.toString();
+  return str.length <= 4 ? str : '*'.repeat(str.length - 4) + str.slice(-4);
+}
+
+let displayValue = computed(() => {
+  if (editable.value || !isSensitive.value) {
+    return innerValue.value;
+  } else {
+    return hideSensitiveNumbers(innerValue.value);
+  }
+});
+
+</script>
+
+<template>
+  <div class="flex items-center justify-between mb-4">
+    <label :for="label" class="w-40 text-gray-400 text-sm">{{ label }}</label>
+    <input
+      v-if="editable"
+      :id="label"
+      :type="type"
+      v-model="innerValue"
+      :class="{
+        'text-indigo-500 border-b border-gray-200 bg-gray-100 text-sm': editable,
+        ' text-gray-500 border-b border-transparent text-sm': !editable,
+      }"  
+    />
+    <span v-else class="text-gray-600 text-sm ml-2 bg-transparent outline-none flex-1 text-right">
+      {{ isSensitive ? hideSensitiveNumbers(innerValue) : innerValue }}
+    </span>
+  </div>
+</template>
+
+<style>
+.symbols-edit {
+  font-variation-settings: "FILL" 0, "wght" 300, "GRAD" -25, "opsz" 20;
+}
+</style>
