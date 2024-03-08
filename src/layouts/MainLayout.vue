@@ -11,11 +11,11 @@ defineOptions({
   }
 })
 
-let isSidebarOpen = ref(window.innerWidth > 1024)
+let isSidebarOpen = ref(window.innerWidth > 992)
 
 onMounted(() => {
   window.addEventListener('resize', () => {
-    isSidebarOpen.value = window.innerWidth > 1024
+    isSidebarOpen.value = window.innerWidth > 992
   })
 })
 
@@ -26,7 +26,7 @@ const toggleSidebar = () => {
 </script>
 
 <template>
-  <div class="h-screen w-screen flex flex-col">
+  <div class="h-screen w-screen flex flex-col bg-tertiary">
     <AppNavbar @toggle-sidebar="toggleSidebar"/>
 
     <div class="overflow-y-auto flex flex-1 relative">
