@@ -9,6 +9,7 @@ module.exports = {
         secondary_dark: '#0F2021',
         tertiary: '#FFF',
         tertiary_dark: '#0F2021',
+        success: '#5DA644',
       },
     },
   },

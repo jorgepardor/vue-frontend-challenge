@@ -1,15 +1,3 @@
-<script setup>
-import { ref } from "vue";
-import MainLayout from "@/layouts/MainLayout.vue";
-import InfoBlock from "@/components/App/InfoBlock.vue";
-import { PersonalInfo } from "@/models/PersonalInfo";
-import { AccountInfo } from "@/models/AccountInfo";
-import { AddressInfo } from "@/models/AddressInfo";
-import { HealthInfo } from "@/models/HealthInfo";
-import { WorkInfo } from "@/models/WorkInfo";
-import { BankInfo } from "@/models/BankInfo";
-import { SessionInfo } from "@/models/SessionInfo";
-
 /*
 Reto 2: Vista de Datos del Usuario.
 
@@ -19,6 +7,19 @@ pero también vamos a valorar la capacidad de las personas a la hora de proponer
 
 Siéntete libre de modificar tanto código como sea necesario, recuerda que el código proporcionado es sólo un ejemplo.
 */
+
+<script setup>
+import { ref } from "vue";
+import MainLayout from "@/layouts/MainLayout.vue";
+import InfoBlock from "@/components/userDetailView/InfoBlock.vue";
+import { PersonalInfo } from "@/models/PersonalInfo";
+import { AccountInfo } from "@/models/AccountInfo";
+import { AddressInfo } from "@/models/AddressInfo";
+import { HealthInfo } from "@/models/HealthInfo";
+import { WorkInfo } from "@/models/WorkInfo";
+import { BankInfo } from "@/models/BankInfo";
+import { SessionInfo } from "@/models/SessionInfo";
+
 
 const userData = {
   id: 1,

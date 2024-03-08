@@ -15,6 +15,7 @@ export class BankInfo {
       userData.bank.cardNumber,
       "Card Number",
       "text",
+      false, 
       true
     );
     this.bankCardExpire = new Attribute(
@@ -22,7 +23,7 @@ export class BankInfo {
       "Card Expire Date",
       "text"
     );
-    this.bankIban = new Attribute(userData.bank.iban, "IBAN", "text", true);
+    this.bankIban = new Attribute(userData.bank.iban, "IBAN", "text", false, true);
   }
 
   getAllAttributes() {

@@ -5,7 +5,7 @@ export class PersonalInfo {
     this.maidenName = new Attribute(userData.maidenName, "Maiden Name", "text");
     this.lastName = new Attribute(userData.lastName, "Last Name", "text");
     this.phone = new Attribute(userData.phone, "Phone", "text");
-    this.age = new Attribute(userData.age, "Age", "number", true);
+    this.age = new Attribute(userData.age, "Age", "number");
     this.birthDate = new Attribute(userData.birthDate, "Birth Date", "date");
     this.university = new Attribute(userData.university, "University", "text");
     this.ssn = new Attribute(userData.ssn, "SSN", "text", false, true);

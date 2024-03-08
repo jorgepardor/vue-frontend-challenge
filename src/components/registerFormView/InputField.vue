@@ -18,7 +18,7 @@ let id = ref(Math.random().toString(36).substring(2, 15));
 
 <template>
   <div>
-    <div class="font-semibold block my-3 text-md" :for="id">
+    <div class="font-semibold block my-3 text-sm text-gray-500" :for="id">
       {{ label }}
     </div>
     <input

@@ -19,7 +19,7 @@ const redirectTo = (routename) => {
       '-translate-x-full': !isSidebarOpen,
       'translate-x-0': isSidebarOpen,
     }"
-    class="bg-secondary  lg:bg-tertiary p-4 lg:block absolute left-0 top-0 h-full z-20 transition-all transform -translate-x-full "
+    class="bg-secondary  lg:bg-tertiary p-4 lg:block absolute lg:relative left-0 top-0 h-full z-50 transition-all transform -translate-x-full "
   >
     <ul class="space-y-2">
       <li>

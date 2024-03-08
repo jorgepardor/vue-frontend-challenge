@@ -1,32 +1,23 @@
+/* Reto 1: Validación de formularios En este formulario de registro, vamos a
+pedir a los usuarios que nos proporcionen un nombre, un email y una contraseña
+(dos veces). Las validaciones serán las siguientes: Nombre Requerido | Máximo 64
+letras Email Requerido | Formato Email Contraseña Requerido | 8 caracteres
+alfanuméricos, un número y un caracter especial Repetir Contraseña Requerido |
+Misma contraseña que la anterior Siéntete libre de modificar tanto código como
+sea necesario, recuerda que el código proporcionado es sólo un ejemplo. */
+
 <script setup>
-/*
-Reto 1: Validación de formularios
-
-En este formulario de registro, vamos a pedir a los usuarios que nos proporcionen
-un nombre, un email y una contraseña (dos veces). Las validaciones serán las siguientes:
-
-  Nombre                Requerido | Máximo 64 letras
-  Email                 Requerido | Formato Email
-  Contraseña            Requerido | 8 caracteres alfanuméricos, un número y un caracter especial
-  Repetir Contraseña    Requerido | Misma contraseña que la anterior
-
-Siéntete libre de modificar tanto código como sea necesario, recuerda que el código proporcionado es sólo un ejemplo.
-*/
 import { ref, computed } from "vue";
-import InputField from "@/components/App/InputField.vue";
+import InputField from "@/components/registerFormView/InputField.vue";
 import MainLayout from "@/layouts/MainLayout.vue";
 
 let username = ref("");
-let usernameBlurred = ref(false);
 
 let email = ref("");
-let emailBlurred = ref(false);
 
 let password = ref("");
-let passwordBlurred = ref(false);
 
 let confirmPassword = ref("");
-let confirmPasswordBlurred = ref(false);
 
 let submitClicked = ref(false);
 
@@ -68,9 +59,9 @@ const submit = () => {
 
 <template>
   <MainLayout>
-    <div class="flex items-center justify-center min-h-screen">
+    <div class="flex items-center justify-center min-h-full">
       <form
-        class="bg-white p-10 rounded-lg shadow-lg w-full sm:w-1/4"
+        class="bg-white p-10 rounded-lg shadow-lg w-full sm:w-1/2 lg:w-1/4"
         @submit.prevent="submit"
       >
         <InputField
@@ -92,7 +83,7 @@ const submit = () => {
           label="Password"
           type="password"
           :validator="passwordIsValid"
-          errorMessage="La contraseña debe tener al menos 8 caracteres, incluyendo al menos un número y un carácter especial."
+          errorMessage="La contraseña debe tener al menos 8 caracteres, incluyendo al menos un número y un caracter especial."
         />
         <InputField
           v-model="confirmPassword"
@@ -103,15 +94,15 @@ const submit = () => {
         />
         <button
           type="submit"
-          class="bg-primary w-full mt-6 rounded-lg px-4 py-2 text-lg text-white font-semibold font-sans"
+          class="bg-secondary w-full mt-6 rounded-lg px-4 py-2 text-lg text-tertiary font-semibold font-sans"
           @click="submitClicked = true"
         >
           Register
         </button>
-        <p v-if="submitClicked && !formIsValid" class="text-red-500">
-          Por favor, corrige los errores antes de registrarte.
+        <p v-if="submitClicked && !formIsValid" class="text-red-500 text-sm mt-2">
+          Hemos encontrado un error, por favor revisa los datos.
         </p>
-        <p v-else-if="submitClicked && formIsValid" class="text-green-500">
+        <p v-else-if="submitClicked && formIsValid" class="text-green-500 text-sm mt-2">
           Tus datos han sido confirmados.
         </p>
       </form>

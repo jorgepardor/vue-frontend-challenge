@@ -1,5 +1,5 @@
 <script setup>
-import EditableField from "@/components/App/EditableField.vue";
+import EditableField from "@/components/userDetailView/EditableField.vue";
 import { onMounted, ref } from "vue";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -26,8 +26,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="md:flex-shrink-0 relative bg-indigo-500">
-    <div ref="mapContainer" style="height: 260px; width: 260px"></div>
+  <div class="md:flex-shrink-0 relative bg-indigo-500 z-10">
+    <div ref="mapContainer" class="h-64 w-auto md:h-64 md:w-64 lg:h-160 lg:w-160"></div>
   </div>
 </template>
 
