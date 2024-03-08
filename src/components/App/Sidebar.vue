@@ -1,17 +1,26 @@
 <script setup>
-import router from '@/router'
+import router from "@/router";
 
 defineOptions({
-  name: 'AppSidebar',
-})
+  name: "AppSidebar",
+});
+defineProps({
+  isSidebarOpen: Boolean,
+});
 
 const redirectTo = (routename) => {
-  router.push({ name: routename })
-}
+  router.push({ name: routename });
+};
 </script>
 
 <template>
-  <aside class="bg-primary text-white p-4">
+  <aside
+    v-bind:class="{
+      '-translate-x-full': !isSidebarOpen,
+      'translate-x-0': isSidebarOpen,
+    }"
+    class="bg-primary text-white p-4 lg:block absolute left-0 top-0 h-full z-20 transition-all transform -translate-x-full"
+  >
     <ul class="space-y-2">
       <li>
         <div
