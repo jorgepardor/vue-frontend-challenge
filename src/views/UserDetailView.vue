@@ -5,6 +5,10 @@ import InfoBlock from "@/components/App/InfoBlock.vue";
 import { PersonalInfo } from "@/models/PersonalInfo";
 import { AccountInfo } from "@/models/AccountInfo";
 import { AddressInfo } from "@/models/AddressInfo";
+import { HealthInfo } from "@/models/HealthInfo";
+import { WorkInfo } from "@/models/WorkInfo";
+import { BankInfo } from "@/models/BankInfo";
+import { SessionInfo } from "@/models/SessionInfo";
 
 /*
 Reto 2: Vista de Datos del Usuario.
@@ -81,130 +85,21 @@ const userData = {
 const personalInfo = new PersonalInfo(userData);
 const accountInfo = new AccountInfo(userData);
 const addressInfo = new AddressInfo(userData);
-console.log(addressInfo);
+const healthInfo = new HealthInfo(userData);
+const workInfo = new WorkInfo(userData);
+const bankInfo = new BankInfo(userData);
+const sesionInfo = new SessionInfo(userData);
+
 </script>
 
 <template>
   <MainLayout>
     <InfoBlock title="Account" :fields="accountInfo" />
     <InfoBlock title="Personal" :fields="personalInfo" />
+    <InfoBlock title="Health" :fields="healthInfo" />
     <InfoBlock title="Address" :fields="addressInfo" />
-
-    <!-- 
-    <InfoBlock
-      :info="userData"
-      title="Health & Physics"
-      :fields="[
-        { keyPath: userData.height, label: 'Height', type: 'number' },
-        { keyPath: userData.weight, label: 'Weight', type: 'number' },
-        { keyPath: userData.bloodGroup, label: 'Blood group', type: 'text' },
-        { keyPath: userData.eyeColor, label: 'Eye Color', type: 'text' },
-        { keyPath: userData.hair.color, label: 'Hair Color', type: 'text' },
-        { keyPath: userData.hair.type, label: 'Hair Type', type: 'text' },
-        { keyPath: userData.university, label: 'University', type: 'text' },
-      ]"
-    />
-    <InfoBlockImage
-      :info="userData"
-      title="Address"
-      :imageData="{
-        type: 'map',
-        latitude: userData.address.coordinates.lat,
-        longitude: userData.address.coordinates.lng,
-      }"
-      :fields="[
-        { keyPath: userData.address.address, label: 'Address', type: 'text' },
-        { keyPath: userData.address.city, label: 'City', type: 'text' },
-        {
-          keyPath: userData.address.postalCode,
-          label: 'Postal Code',
-          type: 'text',
-        },
-        { keyPath: userData.address.state, label: 'State', type: 'text' },
-      ]"
-    />
-
-    <InfoBlock
-      :info="userData"
-      title="Work"
-      :fields="[
-        { keyPath: userData.company.title, label: 'Title', type: 'text' },
-        {
-          keyPath: userData.company.department,
-          label: 'Department',
-          type: 'text',
-        },
-        { keyPath: userData.company.name, label: 'Company Name', type: 'text' },
-        {
-          keyPath: userData.company.address.address,
-          label: 'Address',
-          type: 'text',
-        },
-        { keyPath: userData.company.address.city, label: 'City', type: 'text' },
-        {
-          keyPath: userData.company.address.state,
-          label: 'State',
-          type: 'text',
-        },
-        {
-          keyPath: userData.ein,
-          label: 'EIN',
-          type: 'text',
-          isSensitive: true,
-        },
-      ]"
-    />
-
-    <InfoBlock
-      :info="userData"
-      title="Bank Information"
-      :fields="[
-        { keyPath: userData.bank.currency, label: 'Currency', type: 'text' },
-        { keyPath: userData.bank.cardType, label: 'Card Type', type: 'text' },
-        {
-          keyPath: userData.bank.cardNumber,
-          label: 'Card Number',
-          type: 'text',
-          isSensitive: true,
-        },
-        {
-          keyPath: userData.bank.cardExpire,
-          label: 'Card Expire Date',
-          type: 'text',
-        },
-        {
-          keyPath: userData.bank.iban,
-          label: 'IBAN',
-          type: 'text',
-          isSensitive: true,
-        },
-      ]"
-    />
-
-    <InfoBlock
-      :info="userData"
-      title="Session Data"
-      :fields="[
-        {
-          keyPath: userData.domain,
-          label: 'Domain',
-          type: 'text',
-          isBlocked: true,
-        },
-        { keyPath: userData.ip, label: 'IP', type: 'text', isBlocked: true },
-        {
-          keyPath: userData.macAddress,
-          label: 'MAC Address',
-          type: 'text',
-          isBlocked: true,
-        },
-        {
-          keyPath: userData.phone,
-          label: 'Phone',
-          type: 'text',
-          isBlocked: true,
-        },
-      ]"
-    /> -->
+    <InfoBlock title="Work" :fields="workInfo" />
+    <InfoBlock title="Bank" :fields="bankInfo" />
+    <InfoBlock title="Session" :fields="sesionInfo" />
   </MainLayout>
 </template>
