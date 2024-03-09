@@ -1,27 +1,34 @@
 <script setup>
-import EditableField from "@/components/userDetailView/EditableField.vue";
-import { ref } from "vue";
-import Avatar from "@/components/userDetailView/Avatar.vue";
-import Location from "@/components/userDetailView/Location.vue";
+import { ref } from 'vue'
 
-const props = defineProps({
-  title: String,
-  fields: Object,
-});
+import Avatar from '@/components/userDetailView/AvatarField.vue'
+import EditableField from '@/components/userDetailView/EditableField.vue'
+import Location from '@/components/userDetailView/LocationField.vue'
 
-const isEditing = ref(false);
-const showUpdatedMessage = ref(false);
+defineProps({
+  title: {
+    type: String,
+    default: '',
+  },
+  fields: {
+    type: Object,
+    default: () => ({}),
+  },
+})
+
+const isEditing = ref(false)
+const showUpdatedMessage = ref(false)
 
 const toggleEditing = () => {
-  isEditing.value = !isEditing.value;
-};
+  isEditing.value = !isEditing.value
+}
 
 const isUpdated = () => {
-  showUpdatedMessage.value = true;
+  showUpdatedMessage.value = true
   setTimeout(() => {
-    showUpdatedMessage.value = false;
-  }, 2000);
-};
+    showUpdatedMessage.value = false
+  }, 2000)
+}
 </script>
 
 <template>
@@ -32,7 +39,9 @@ const isUpdated = () => {
       <div
         class="mb-4 uppercase tracking-wide text-sm text-secondary font-semibold flex align-center"
       >
-        <h4 class="my-auto mr-2">{{ title }}</h4>
+        <h4 class="my-auto mr-2">
+          {{ title }}
+        </h4>
         <button
           @click="
             if (isEditing) isUpdated();
@@ -43,7 +52,7 @@ const isUpdated = () => {
               ? '<span class=&quot;material-symbols-outlined text-secondary text-lg&quot;>save</span>'
               : '<span class=&quot;material-symbols-outlined text-gray-500 text-lg&quot;>edit</span>'
           "
-        ></button>
+        />
         <p
           v-if="showUpdatedMessage"
           class="text-green-500 text-xs font-light lowercase ml-1 my-auto"
@@ -59,15 +68,18 @@ const isUpdated = () => {
         :label="field.label"
         :type="field.type"
         :editable="isEditing"
-        :isSensitive="field.isSensitive"
-        :isBlocked="field.isBlocked"
+        :is-sensitive="field.isSensitive"
+        :is-blocked="field.isBlocked"
       />
     </div>
     <div v-if="fields.image && fields.image.url">
       <Avatar :url="fields.image.url" />
     </div>
     <div v-if="fields.location">
-      <Location :lat="fields.location.lat" :lng="fields.location.lng" />
+      <Location
+        :lat="fields.location.lat"
+        :lng="fields.location.lng"
+      />
     </div>
   </div>
 </template>

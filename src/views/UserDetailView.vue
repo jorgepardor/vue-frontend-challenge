@@ -9,36 +9,57 @@ Siéntete libre de modificar tanto código como sea necesario, recuerda que el c
 */
 
 <script setup>
-import { ref } from "vue";
-import MainLayout from "@/layouts/MainLayout.vue";
-import InfoBlock from "@/components/userDetailView/InfoBlock.vue";
-import { PersonalInfo } from "@/models/PersonalInfo";
-import { AccountInfo } from "@/models/AccountInfo";
-import { AddressInfo } from "@/models/AddressInfo";
-import { HealthInfo } from "@/models/HealthInfo";
-import { WorkInfo } from "@/models/WorkInfo";
-import { BankInfo } from "@/models/BankInfo";
-import { SessionInfo } from "@/models/SessionInfo";
-import { userData } from "@/data/userData.js";
 
-const personalInfo = new PersonalInfo(userData);
-const accountInfo = new AccountInfo(userData);
-const addressInfo = new AddressInfo(userData);
-const healthInfo = new HealthInfo(userData);
-const workInfo = new WorkInfo(userData);
-const bankInfo = new BankInfo(userData);
-const sesionInfo = new SessionInfo(userData);
+import InfoBlock from '@/components/userDetailView/InfoBlock.vue'
+import { userData } from '@/data/userData.js'
+import MainLayout from '@/layouts/MainLayout.vue'
+import { AccountInfo } from '@/models/AccountInfo'
+import { AddressInfo } from '@/models/AddressInfo'
+import { BankInfo } from '@/models/BankInfo'
+import { HealthInfo } from '@/models/HealthInfo'
+import { PersonalInfo } from '@/models/PersonalInfo'
+import { SessionInfo } from '@/models/SessionInfo'
+import { WorkInfo } from '@/models/WorkInfo'
+
+const personalInfo = new PersonalInfo(userData)
+const accountInfo = new AccountInfo(userData)
+const addressInfo = new AddressInfo(userData)
+const healthInfo = new HealthInfo(userData)
+const workInfo = new WorkInfo(userData)
+const bankInfo = new BankInfo(userData)
+const sesionInfo = new SessionInfo(userData)
 
 </script>
 
 <template>
   <MainLayout>
-    <InfoBlock title="Account" :fields="accountInfo" />
-    <InfoBlock title="Personal" :fields="personalInfo" />
-    <InfoBlock title="Health" :fields="healthInfo" />
-    <InfoBlock title="Address" :fields="addressInfo" />
-    <InfoBlock title="Work" :fields="workInfo" />
-    <InfoBlock title="Bank" :fields="bankInfo" />
-    <InfoBlock title="Session" :fields="sesionInfo" />
+    <InfoBlock
+      title="Account"
+      :fields="accountInfo"
+    />
+    <InfoBlock
+      title="Personal"
+      :fields="personalInfo"
+    />
+    <InfoBlock
+      title="Health"
+      :fields="healthInfo"
+    />
+    <InfoBlock
+      title="Address"
+      :fields="addressInfo"
+    />
+    <InfoBlock
+      title="Work"
+      :fields="workInfo"
+    />
+    <InfoBlock
+      title="Bank"
+      :fields="bankInfo"
+    />
+    <InfoBlock
+      title="Session"
+      :fields="sesionInfo"
+    />
   </MainLayout>
 </template>

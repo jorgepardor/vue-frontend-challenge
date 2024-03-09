@@ -1,18 +1,18 @@
 <script setup>
-import { ref, watch, toRefs, computed } from "vue";
+import { ref, watch, toRefs, computed } from 'vue'
 
 const props = defineProps({
   modelValue: {
     type: [String, Number],
-    default: "",
+    default: '',
   },
   label: {
     type: String,
-    default: "",
+    default: '',
   },
   type: {
     type: String,
-    default: "text",
+    default: 'text',
   },
   editable: {
     type: Boolean,
@@ -26,53 +26,59 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-});
+})
 
-let { modelValue, editable, isSensitive, isBlocked } = toRefs(props);
+const { modelValue, editable, isSensitive, isBlocked } = toRefs(props)
 
-let innerValue = ref(modelValue.value);
+const innerValue = ref(modelValue.value)
 
 watch(modelValue, (newVal) => {
-  innerValue.value = newVal;
-});
+  innerValue.value = newVal
+})
 
-
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(['update:modelValue'])
 
 watch(innerValue, (newVal) => {
-  emit("update:modelValue", newVal);
-});
+  emit('update:modelValue', newVal)
+})
 
-function hideSensitiveNumbers(number) {
-  if (!number) return '';
-  const str = number.toString();
-  return str.length <= 4 ? str : '*'.repeat(str.length - 4) + str.slice(-4);
+function hideSensitiveNumbers (number) {
+  if (!number) return ''
+  const str = number.toString()
+  return str.length <= 4 ? str : '*'.repeat(str.length - 4) + str.slice(-4)
 }
 
-let displayValue = computed(() => {
+// eslint-disable-next-line no-unused-vars
+const displayValue = computed(() => {
   if (editable.value || !isSensitive.value) {
-    return innerValue.value;
+    return innerValue.value
   } else {
-    return hideSensitiveNumbers(innerValue.value);
+    return hideSensitiveNumbers(innerValue.value)
   }
-});
+})
 
 </script>
 
 <template>
   <div class="flex items-center justify-between mb-4">
-    <label :for="label" class="w-40 text-gray-400 text-sm">{{ label }}</label>
+    <label
+      :for="label"
+      class="w-40 text-gray-400 text-sm"
+    >{{ label }}</label>
     <input
       v-if="editable && !isBlocked"
       :id="label"
-      :type="type"
       v-model="innerValue"
+      :type="type"
       :class="{
         'text-indigo-500 border-b border-gray-200 text-sm text-right': editable,
         ' text-gray-500 border-b border-white text-sm': !editable,
-      }"  
-    />
-    <span v-else class="text-gray-600 text-sm ml-2 bg-transparent outline-none flex-1 text-right">
+      }"
+    >
+    <span
+      v-else
+      class="text-gray-600 text-sm ml-2 bg-transparent outline-none flex-1 text-right"
+    >
       {{ isSensitive && !isBlocked ? hideSensitiveNumbers(innerValue) : ( isBlocked ? '********' : innerValue) }}
     </span>
   </div>

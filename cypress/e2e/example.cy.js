@@ -1,3 +1,4 @@
+/* global cy */
 // https://on.cypress.io/api
 
 describe('My First Test', () => {

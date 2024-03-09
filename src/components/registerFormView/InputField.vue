@@ -1,24 +1,45 @@
 <script setup>
-import { ref } from "vue";
+import { ref } from 'vue'
 
 const props = defineProps({
-  modelValue: String,
-  label: String,
-  type: String,
-  validator: Boolean,
-  errorMessage: String,
-  successMessage: String,
-});
+  modelValue: {
+    type: String,
+    default: '',
+  },
+  label: {
+    type: String,
+    default: 'label',
+  },
+  type: {
+    type: String,
+    default: 'text',
+  },
+  validator: {
+    type: Boolean,
+    default: false,
+  },
+  errorMessage: {
+    type: String,
+    default: 'error',
+  },
+  successMessage: {
+    type: String,
+    default: 'success',
+  },
+})
 
-const emit = defineEmits(["update:modelValue"]);
+const emit = defineEmits(['update:modelValue'])
 
-let blurred = ref(false);
-let id = ref(Math.random().toString(36).substring(2, 15));
+const blurred = ref(false)
+const id = ref(Math.random().toString(36).substring(2, 15))
 </script>
 
 <template>
   <div>
-    <div class="font-semibold block my-3 text-sm text-gray-500" :for="id">
+    <div
+      class="font-semibold block my-3 text-sm text-gray-500"
+      :for="id"
+    >
       {{ label }}
     </div>
     <input
@@ -34,11 +55,14 @@ let id = ref(Math.random().toString(36).substring(2, 15));
       :name="id"
       :placeholder="label"
       :value="modelValue"
-      @input="$emit('update:modelValue', $event.target.value)"
+      @input="emit('update:modelValue', $event.target.value)"
       @blur="blurred = true"
-    />
+    >
     <transition name="fade">
-      <p v-if="!validator && blurred" class="text-red-500 text-xs pl-2">
+      <p
+        v-if="!validator && blurred"
+        class="text-red-500 text-xs pl-2"
+      >
         {{ errorMessage }}
       </p>
     </transition>

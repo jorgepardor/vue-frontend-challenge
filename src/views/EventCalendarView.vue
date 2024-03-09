@@ -7,91 +7,92 @@ cada día. Como siempre, el diseño y la creatividad quedan del lado de tu lado,
 que el código proporcionado es sólo un ejemplo. */
 
 <script setup>
-import dayjs from "dayjs";
-import isToday from "dayjs/plugin/isToday";
-import { computed, ref } from "vue";
-import MainLayout from "@/layouts/MainLayout.vue";
-import { eventsData } from "@/data/eventsData.js";
+import dayjs from 'dayjs'
+import isToday from 'dayjs/plugin/isToday'
+import { computed, ref } from 'vue'
 
-dayjs.extend(isToday);
+import { eventsData } from '@/data/eventsData.js'
+import MainLayout from '@/layouts/MainLayout.vue'
+
+dayjs.extend(isToday)
 const weekDays = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
+  'Sunday',
+  'Monday',
+  'Tuesday',
+  'Wednesday',
+  'Thursday',
+  'Friday',
+  'Saturday',
+]
 
-const viewDate = ref(dayjs());
-let isCurrentMonth = ref(true);
+const viewDate = ref(dayjs())
+const isCurrentMonth = ref(true)
 
 const daystoPrepend = computed(() => {
-  const startOfMonth = dayjs(viewDate.value).startOf("month");
-  const startOfFirstWeek = startOfMonth.startOf("week");
-  const daysToFirstDay = startOfMonth.diff(startOfFirstWeek, "day");
+  const startOfMonth = dayjs(viewDate.value).startOf('month')
+  const startOfFirstWeek = startOfMonth.startOf('week')
+  const daysToFirstDay = startOfMonth.diff(startOfFirstWeek, 'day')
 
-  return Array.from(new Array(daysToFirstDay).keys());
-});
+  return Array.from(new Array(daysToFirstDay).keys())
+})
 
 const days = computed(() => {
-  const ranges = [];
-  const startOfRange = dayjs(viewDate.value).startOf("month").add(-1, "day");
-  const endOfRange = dayjs(viewDate.value).endOf("month").add(-1, "day");
-  let currentDate = startOfRange;
+  const ranges = []
+  const startOfRange = dayjs(viewDate.value).startOf('month').add(-1, 'day')
+  const endOfRange = dayjs(viewDate.value).endOf('month').add(-1, 'day')
+  let currentDate = startOfRange
 
   while (currentDate.isBefore(endOfRange) || currentDate.isSame(endOfRange)) {
-    currentDate = currentDate.add(1, "day");
-    ranges.push(currentDate);
+    currentDate = currentDate.add(1, 'day')
+    ranges.push(currentDate)
   }
-  return ranges;
-});
+  return ranges
+})
 
 const shiftMonth = function (amount) {
-  viewDate.value = dayjs(viewDate.value).add(amount, "month");
-  isCurrentMonth.value = dayjs().isSame(viewDate.value, "month");
-};
+  viewDate.value = dayjs(viewDate.value).add(amount, 'month')
+  isCurrentMonth.value = dayjs().isSame(viewDate.value, 'month')
+}
 const reset = function () {
-  viewDate.value = dayjs();
-  isCurrentMonth.value = true;
-};
+  viewDate.value = dayjs()
+  isCurrentMonth.value = true
+}
 
 const eventsByDay = computed(() => {
-  const events = {};
+  const events = {}
   for (const event of eventsData.value) {
-    const day = dayjs(event.eventTime).format("YYYY-MM-DD");
+    const day = dayjs(event.eventTime).format('YYYY-MM-DD')
     if (!events[day]) {
-      events[day] = [];
+      events[day] = []
     }
-    events[day].push(event);
+    events[day].push(event)
   }
   for (const day in events) {
     events[day].sort((a, b) => {
-      return dayjs(a.eventTime).isAfter(dayjs(b.eventTime)) ? 1 : -1;
-    });
+      return dayjs(a.eventTime).isAfter(dayjs(b.eventTime)) ? 1 : -1
+    })
   }
 
-  return events;
-});
+  return events
+})
 
-let selectedDate = ref(dayjs().format("YYYY-MM-DD"));
-let matchingEvents = ref([]);
+const selectedDate = ref(dayjs().format('YYYY-MM-DD'))
+const matchingEvents = ref([])
 
-let selectDate = (date) => {
-  selectedDate.value = date;
+const selectDate = (date) => {
+  selectedDate.value = date
   matchingEvents.value = eventsData.value.filter(
     (event) =>
-      dayjs(event.eventTime).format("YYYY-MM-DD") === selectedDate.value
-  );
-};
+      dayjs(event.eventTime).format('YYYY-MM-DD') === selectedDate.value,
+  )
+}
 
 const formatDate = (dateString) => {
-  const options = { day: "numeric", month: "long" };
-  const date = new Date(dateString);
-  return date.toLocaleDateString("es-ES", options);
-};
-selectDate(dayjs().format("YYYY-MM-DD"));
+  const options = { day: 'numeric', month: 'long' }
+  const date = new Date(dateString)
+  return date.toLocaleDateString('es-ES', options)
+}
+selectDate(dayjs().format('YYYY-MM-DD'))
 </script>
 
 <template>
@@ -113,8 +114,7 @@ selectDate(dayjs().format("YYYY-MM-DD"));
         </button>
         <span
           class="flex-grow lg:flex-grow-0 lg:w-96 text-lg lg:text-3xl text-secondary font-extrabold uppercase px-2 lg:px-8 text-center"
-          >{{ viewDate.format("MMMM YYYY") }}</span
-        >
+        >{{ viewDate.format("MMMM YYYY") }}</span>
         <button
           class="calendar-buttton"
           @click="
@@ -141,7 +141,11 @@ selectDate(dayjs().format("YYYY-MM-DD"));
       </div>
     </div>
     <div class="grid grid-cols-7 gap-1 max-w-full lg:max-w-7xl mx-auto mt-4 lg:mt-16">
-      <div v-for="weekDay in weekDays" class="text-center">
+      <div
+        v-for="(weekDay, index) in weekDays"
+        :key="index"
+        class="text-center"
+      >
         <div
           class="text-xs lg:text-md lg:font-bold lg:uppercase lg:pb-2 text-gray-500"
         >
@@ -151,16 +155,22 @@ selectDate(dayjs().format("YYYY-MM-DD"));
       </div>
     </div>
     <div class="grid grid-cols-7 max-w-full lg:max-w-7xl mx-auto mt-2">
-      <div v-for="prepend in daystoPrepend" />
       <div
-        v-for="day in days"
+        v-for="(prepend, index) in daystoPrepend"
+        :key="index"
+      />
+      <div
+        v-for="(day, dayIndex) in days"
+        :key="dayIndex"
         class="border border-slate-200 flex flex-col h-14 lg:h-32 text-sm text-gray-500 text-bold"
       >
         <div
           :class="[day.isToday() ? 'bg-secondary text-tertiary mb-2' : '']"
           class="text-center mb-2"
         >
-          <div class="opacity-60 lg:opacity-100">{{ day.format("D") }}</div>
+          <div class="opacity-60 lg:opacity-100">
+            {{ day.format("D") }}
+          </div>
         </div>
 
         <div
@@ -186,8 +196,8 @@ selectDate(dayjs().format("YYYY-MM-DD"));
             class="flex justify-center"
           >
             <button
-              @click="selectDate(day.format('YYYY-MM-DD'))"
               class="flex lg:hidden items-center justify-center w-full h-4 bg-amber-500 rounded-full mx-1"
+              @click="selectDate(day.format('YYYY-MM-DD'))"
             >
               <span class="text-sm text-secondary font-normal">{{
                 eventsByDay[day.format("YYYY-MM-DD")].length
@@ -197,12 +207,17 @@ selectDate(dayjs().format("YYYY-MM-DD"));
         </div>
       </div>
     </div>
-    <h6 class="text-center lg:hidden">{{ formatDate(selectedDate) }}</h6>
+    <h6 class="text-center lg:hidden">
+      {{ formatDate(selectedDate) }}
+    </h6>
     <div
-      class="bottom-10 z-20 mx-auto left-0 right-0 px-4 py-2 lg:hidden"
       v-if="matchingEvents && matchingEvents.length"
+      class="bottom-10 z-20 mx-auto left-0 right-0 px-4 py-2 lg:hidden"
     >
-      <div v-for="(event, index) in matchingEvents" :key="index">
+      <div
+        v-for="(event, index) in matchingEvents"
+        :key="index"
+      >
         <span class="text-gray-500 text-xs text-left uppercase">
           {{ dayjs(event.eventTime).format("HH:mm") }}
         </span>
@@ -211,7 +226,10 @@ selectDate(dayjs().format("YYYY-MM-DD"));
         </span>
       </div>
     </div>
-    <div class="bottom-10 z-20 mx-auto left-0 right-0 px-4 py-2 lg:hidden" v-else>
+    <div
+      v-else
+      class="bottom-10 z-20 mx-auto left-0 right-0 px-4 py-2 lg:hidden"
+    >
       <p class="text-gray-400 text-center text-sm">
         No hay eventos para este día.
       </p>

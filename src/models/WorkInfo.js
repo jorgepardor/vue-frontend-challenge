@@ -1,41 +1,41 @@
-import { Attribute } from "./Attribute";
+import { Attribute } from './Attribute'
 export class WorkInfo {
-  constructor(userData) {
-    this.height = new Attribute(userData.height, "Height", "number");
-    this.companyTitle = new Attribute(userData.company.title, "Title", "text");
+  constructor (userData) {
+    this.height = new Attribute(userData.height, 'Height', 'number')
+    this.companyTitle = new Attribute(userData.company.title, 'Title', 'text')
     this.companyDepartment = new Attribute(
       userData.company.department,
-      "Department",
-      "text"
-    );
+      'Department',
+      'text',
+    )
     this.companyName = new Attribute(
       userData.company.name,
-      "Company Name",
-      "text"
-    );
+      'Company Name',
+      'text',
+    )
     this.companyAddress = new Attribute(
       userData.company.address.address,
-      "Address",
-      "text"
-    );
+      'Address',
+      'text',
+    )
     this.companyCity = new Attribute(
       userData.company.address.city,
-      "City",
-      "text"
-    );
+      'City',
+      'text',
+    )
     this.companyState = new Attribute(
       userData.company.address.state,
-      "State",
-      "text"
-    );
-    this.ein = new Attribute(userData.ein, "EIN", "text", true);
+      'State',
+      'text',
+    )
+    this.ein = new Attribute(userData.ein, 'EIN', 'text', true)
   }
 
-  getAllAttributes() {
-    const attributes = [];
+  getAllAttributes () {
+    const attributes = []
     for (const key in this) {
       if (this[key] instanceof Attribute) {
-        const attr = this[key];
+        const attr = this[key]
         attributes.push({
           keyPath: attr.keyPath,
           value: attr.value,
@@ -43,9 +43,9 @@ export class WorkInfo {
           type: attr.type,
           isSensitive: attr.isSensitive || false,
           isBlocked: attr.isBlocked || false,
-        });
+        })
       }
     }
-    return attributes;
+    return attributes
   }
 }

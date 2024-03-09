@@ -1,36 +1,36 @@
-import { Attribute } from "./Attribute";
+import { Attribute } from './Attribute'
 export class BankInfo {
-  constructor(userData) {
+  constructor (userData) {
     this.bankCurrency = new Attribute(
       userData.bank.currency,
-      "Currency",
-      "text"
-    );
+      'Currency',
+      'text',
+    )
     this.bankCardType = new Attribute(
       userData.bank.cardType,
-      "Card Type",
-      "text"
-    );
+      'Card Type',
+      'text',
+    )
     this.bankCardNumber = new Attribute(
       userData.bank.cardNumber,
-      "Card Number",
-      "text",
-      false, 
-      true
-    );
+      'Card Number',
+      'text',
+      false,
+      true,
+    )
     this.bankCardExpire = new Attribute(
       userData.bank.cardExpire,
-      "Card Expire Date",
-      "text"
-    );
-    this.bankIban = new Attribute(userData.bank.iban, "IBAN", "text", false, true);
+      'Card Expire Date',
+      'text',
+    )
+    this.bankIban = new Attribute(userData.bank.iban, 'IBAN', 'text', false, true)
   }
 
-  getAllAttributes() {
-    const attributes = [];
+  getAllAttributes () {
+    const attributes = []
     for (const key in this) {
       if (this[key] instanceof Attribute) {
-        const attr = this[key];
+        const attr = this[key]
         attributes.push({
           keyPath: attr.keyPath,
           value: attr.value,
@@ -38,9 +38,9 @@ export class BankInfo {
           type: attr.type,
           isSensitive: attr.isSensitive || false,
           isBlocked: attr.isBlocked || false,
-        });
+        })
       }
     }
-    return attributes;
+    return attributes
   }
 }

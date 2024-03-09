@@ -7,43 +7,44 @@ Misma contraseña que la anterior Siéntete libre de modificar tanto código com
 sea necesario, recuerda que el código proporcionado es sólo un ejemplo. */
 
 <script setup>
-import { ref, computed } from "vue";
-import InputField from "@/components/registerFormView/InputField.vue";
-import MainLayout from "@/layouts/MainLayout.vue";
+import { ref, computed } from 'vue'
 
-let username = ref("");
+import InputField from '@/components/registerFormView/InputField.vue'
+import MainLayout from '@/layouts/MainLayout.vue'
 
-let email = ref("");
+const username = ref('')
 
-let password = ref("");
+const email = ref('')
 
-let confirmPassword = ref("");
+const password = ref('')
 
-let submitClicked = ref(false);
+const confirmPassword = ref('')
 
-const usernameIsValid = computed(() => username.value.length <= 64);
+const submitClicked = ref(false)
+
+const usernameIsValid = computed(() => username.value.length <= 64)
 
 const emailIsValid = computed(() =>
-  /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(email.value)
-);
+  /^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(email.value),
+)
 
 const passwordIsValid = computed(() =>
   /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/.test(
-    password.value
-  )
-);
+    password.value,
+  ),
+)
 
 const confirmPasswordIsValid = computed(
-  () => password.value === confirmPassword.value && password.value.length > 0
-);
+  () => password.value === confirmPassword.value && password.value.length > 0,
+)
 
 const formIsValid = computed(
   () =>
     usernameIsValid.value &&
     emailIsValid.value &&
     passwordIsValid.value &&
-    confirmPasswordIsValid.value
-);
+    confirmPasswordIsValid.value,
+)
 
 const submit = () => {
   if (formIsValid.value) {
@@ -51,10 +52,10 @@ const submit = () => {
       username: username.value,
       email: email.value,
       password: password.value,
-    };
-    console.log(payload);
+    }
+    console.log(payload)
   }
-};
+}
 </script>
 
 <template>
@@ -69,28 +70,28 @@ const submit = () => {
           label="Username"
           type="text"
           :validator="usernameIsValid"
-          errorMessage="El nombre de usuario debe tener un máximo de 64 caracteres."
+          error-message="El nombre de usuario debe tener un máximo de 64 caracteres."
         />
         <InputField
           v-model="email"
           label="Email"
           type="email"
           :validator="emailIsValid"
-          errorMessage="Por favor, introduce un email válido."
+          error-message="Por favor, introduce un email válido."
         />
         <InputField
           v-model="password"
           label="Password"
           type="password"
           :validator="passwordIsValid"
-          errorMessage="La contraseña debe tener al menos 8 caracteres, incluyendo al menos un número y un caracter especial."
+          error-message="La contraseña debe tener al menos 8 caracteres, incluyendo al menos un número y un caracter especial."
         />
         <InputField
           v-model="confirmPassword"
           label="Confirm Password"
           type="password"
           :validator="confirmPasswordIsValid"
-          errorMessage="Las contraseñas no coinciden."
+          error-message="Las contraseñas no coinciden."
         />
         <button
           type="submit"
