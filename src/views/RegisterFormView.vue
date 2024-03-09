@@ -61,7 +61,7 @@ const submit = () => {
   <MainLayout>
     <div class="flex items-center justify-center min-h-full">
       <form
-        class="bg-white p-10 rounded-lg shadow-lg w-full sm:w-1/2 lg:w-1/4"
+        class="bg-white p-10 rounded-lg shadow-lg w-full sm:w-1/2 md:w-2/3 lg:w-1/2 xl:w-1/2 2xl:w-1/3"
         @submit.prevent="submit"
       >
         <InputField
@@ -99,10 +99,16 @@ const submit = () => {
         >
           Register
         </button>
-        <p v-if="submitClicked && !formIsValid" class="text-red-500 text-sm mt-2">
+        <p
+          v-if="submitClicked && !formIsValid"
+          class="text-red-500 text-sm mt-2"
+        >
           Hemos encontrado un error, por favor revisa los datos.
         </p>
-        <p v-else-if="submitClicked && formIsValid" class="text-green-500 text-sm mt-2">
+        <p
+          v-else-if="submitClicked && formIsValid"
+          class="text-green-500 text-sm mt-2"
+        >
           Tus datos han sido confirmados.
         </p>
       </form>

@@ -76,12 +76,10 @@ const eventsByDay = computed(() => {
 });
 
 let selectedDate = ref(dayjs().format("YYYY-MM-DD"));
-console.log(selectedDate.value);
 let matchingEvents = ref([]);
 
 let selectDate = (date) => {
   selectedDate.value = date;
-  console.log(date);
   matchingEvents.value = eventsData.value.filter(
     (event) =>
       dayjs(event.eventTime).format("YYYY-MM-DD") === selectedDate.value
